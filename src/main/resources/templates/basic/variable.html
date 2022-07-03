@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Variable</title>
+</head>
+<body>
+<h1>SpringEL 표현식</h1>
+
+<h2>Object</h2>
+<ul>
+    <li>${user.username} : <span th:text = "${user.username}"></span></li>
+    <li>${user['username'} : <span th:text = "${user['username']}"></span></li>
+    <li>${user.getUsername()} : <span th:text = "${user.getUsername()}"></span></li>
+</ul>
+
+<h2>List</h2>
+<ul>
+    <li>${users[0].username} : <span th:text="${users[0].username}"></span></li>
+    <li>${users[0]['username']} : <span th:text="${users[0]['username']}"></span></li>
+    <li>${users[0].getUsername()} : <span th:text="${users[0].getUsername()}"></span></li>
+<br>
+    <li>${users[1].username} : <span th:text="${users[1].username}"></span></li>
+    <li>${users[1]['username']} : <span th:text="${users[1]['username']}"></span></li>
+    <li>${users[1].getUsername()} : <span th:text="${users[1].getUsername()}"></span></li>
+</ul>
+
+<h2>Map</h2>
+<ul>
+    <li>${userMap['userA'].username} : <span th:text = "${userMap['userA'].username}"></span></li>
+    <li>${userMap['userA']['username']} : <span th:text = "${userMap['userA']['username']}"></span></li>
+    <li>${userMap['userA'].getUsername()} : <span th:text = "${userMap['userA'].getUsername()}"></span></li>
+
+    <br>
+
+    <li>${userMap['userB'].username} : <span th:text = "${userMap['userB'].username}"></span></li>
+    <li>${userMap['userB']['username']} : <span th:text = "${userMap['userB']['username']}"></span></li>
+    <li>${userMap['userB'].getUsername()} : <span th:text = "${userMap['userB'].getUsername()}"></span></li>
+
+</ul>
+
+<h2> 지역 변수 - (th:with)</h2>
+<div th:with="first=${users[0]}">
+    <p>첫 번째 사람의 이름 : <span th:text = "${first.username}"></span></p>
+    <p>첫 번째 사람의 나이 : <span th:text = "${first.age}"></span>세</p>
+</div>
+
+</body>
+</html>
