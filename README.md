@@ -273,3 +273,52 @@ Escape 문법 때문에 ``<b>`` 태그가 적용되지 않는 모습이다. 따�
 * `hello` : 상대경로
 </div>
 </details>
+
+<details>
+<summary>(#04) Literal</summary>
+<div markdown="1">
+
+`리터럴`은 소스 코드상에 `고정된 값`을 말하는 용어이다.
+예를 들어서 다음 코드에서 "Hello" 는 문자 리터럴, 10 , 20 는 숫자 리터럴이다.
+```java
+String a = "Hello";
+int a = 10 * 20;
+```
+
+타임리프에서 문자 리터럴은 항상 `' (작은 따옴표)`로 감싸야 한다.
+```html
+<span th:text="'hello'">
+```
+
+### BasicController에 literal 메서드 추가
+```java
+@GetMapping("/literal")
+    public String literal(Model model){
+        model.addAttribute("data", "Spring!");
+        return "basic/literal";
+    }
+```
+
+### literal.html
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Literal</title>
+</head>
+<body>
+<ul>
+    <li>'hello' + ' world!' = <span th:text = "'hello' + ' world!'"></span></li>
+    <li>'hello world!' = <span th:text="'hello world!'"></span></li>
+    <li>'hello ' + ${data} = <span th:text="'hello ' + ${data}"></span></li>
+    <li>리터럴 대체 |hello ${data}| = <span th:text="|hello ${data}|"></span></li>
+</ul>
+</body>
+</html>
+```
+
+### 결과
+![](img/Literal.png)
+</div>
+</details>
