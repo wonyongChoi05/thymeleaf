@@ -2,8 +2,11 @@
 > Java Template Engine Library
 
 ***
+<details>
+<summary>(#01) Escape vs UnEscaped</summary>
+<div markdown="1">
 
-### (#01) Escape vs UnEscaped
+## (#01) Escape vs UnEscaped
 HTML 문서는 ``<``, ``>`` 같은 특수문자를 기반으로 정의된다.
 따라서 뷰 템플릿으로 HTML 화면을 생성할 때는 출력하는 데이터에 이러한 특수 문자가 있는 것을 주의해서 사용해야 한다.
 
@@ -51,7 +54,14 @@ Escape 문법 때문에 ``<b>`` 태그가 적용되지 않는 모습이다. 따�
 ![](img/UnEscaped.png)
 ***
 
-### (#02) Variable - SpringEL
+</div>
+</details>
+
+<details>
+<summary>(#02) Variable - SpringEL</summary>
+<div markdown="1">
+
+## (#02) Variable - SpringEL
 타임리프에서 변수를 사용할 때는 ``변수 표현식``을 사용한다.
 > 변수 표현식 : ``${...}``
 
@@ -151,4 +161,60 @@ Escape 문법 때문에 ``<b>`` 태그가 적용되지 않는 모습이다. 따�
 ### 결과
 ![](img/Variable.png)
 
-***
+</div>
+</details>
+
+<details>
+<summary>(#03) LocalDateTime</summary>
+<div markdown="1">
+
+## (#03) LocalDateTime
+### BasicController에 date 메서드 추가
+```java
+    @GetMapping("/date")
+    public String date(Model model){
+        model.addAttribute("localDateTime", LocalDateTime.now());
+        return "basic/date";
+    }
+```
+
+### date.html
+```html
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<h1>LocalDateTime</h1>
+<ul>
+  <li>default = <span th:text="${localDateTime}"></span></li>
+  <li><b>포맷팅</b> : yyyy-MM-dd HH:mm:ss = <span th:text="${#temporals.format(localDateTime, 'yyyy-MM-dd HH:mm:ss')}"></span></li>
+
+</ul>
+<h1>LocalDateTime - Utils</h1>
+
+<ul>
+  <li>${#temporals.day(localDateTime)} = <span th:text="${#temporals.day(localDateTime)}"></span></li>
+  <li>${#temporals.month(localDateTime)} = <span th:text="${#temporals.month(localDateTime)}"></span></li>
+  <li>${#temporals.monthName(localDateTime)} = <span th:text="${#temporals.monthName(localDateTime)}"></span></li>
+  <li>${#temporals.monthNameShort(localDateTime)} = <span th:text="${#temporals.monthNameShort(localDateTime)}"></span></li>
+  <li>${#temporals.year(localDateTime)} = <span th:text="${#temporals.year(localDateTime)}"></span></li>
+  <li>${#temporals.dayOfWeek(localDateTime)} = <span th:text="${#temporals.dayOfWeek(localDateTime)}"></span></li>
+  <li>${#temporals.dayOfWeekName(localDateTime)} = <span th:text="${#temporals.dayOfWeekName(localDateTime)}"></span></li>
+  <li>${#temporals.dayOfWeekNameShort(localDateTime)} = <span th:text="${#temporals.dayOfWeekNameShort(localDateTime)}"></span></li>
+  <li>${#temporals.hour(localDateTime)} = <span th:text="${#temporals.hour(localDateTime)}"></span></li>
+  <li>${#temporals.minute(localDateTime)} = <span th:text="${#temporals.minute(localDateTime)}"></span></li>
+  <li>${#temporals.second(localDateTime)} = <span th:text="${#temporals.second(localDateTime)}"></span></li>
+  <li>${#temporals.nanosecond(localDateTime)} = <span th:text="${#temporals.nanosecond(localDateTime)}"></span></li>
+</ul>
+</body>
+</html>
+```
+날짜를 `formating` 할 수 있는 `#temporals.format()`을 자주 사용함
+
+### 결과
+![](img/LocalDateTime.png)
+</div>
+</details>
