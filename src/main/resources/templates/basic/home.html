@@ -8,19 +8,23 @@
 <ul>
     <h2>Thymeleaf</h2>
 
-    <li><div><a href="/basic/text-basic">textBasic</a></div></li>
+    <li><a th:href="@{/basic/text-basic/}">text basic</a></li>
 
     <h2>Escape vs UnEscaped</h2>
-    <li><div><a href="/basic/text-unescaped">textUnescaped</a></div></li>
+    <li><a th:href="@{/basic/text-unescaped}">text unescaped</a></li>
 
     <h2>Variable</h2>
-    <li><a href="/basic/variable">Variable</a></li>
+    <li><a th:href="@{/basic/variable}">variable</a></li>
 
     <h2>BasicObjects</h2>
-    <li><a href="/basic/basic-objects">BasicObjects</a></li>
+    <li><a th:href="@{/basic/basic-objects}">basic objects</a></li>
 
     <h2>LocalDateTime</h2>
-    <li><a href="/basic/date">LocalDateTime</a></li>
+    <li><a th:href="@{/basic/date}">date</a></li>
+
+    <h2>Link</h2>
+    <li><a th:href="@{/basic/link}">link</a></li>
+
 </ul>
 </body>
 </html>

@@ -1,6 +1,6 @@
 # thymeleaf
-> Java Template Engine Library
-
+> Java Template Engine Library <br>
+> [tymeleaf docs](https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html#introducing-thymeleaf)
 ***
 <details>
 <summary>(#01) Escape vs UnEscaped</summary>
@@ -216,5 +216,60 @@ Escape 문법 때문에 ``<b>`` 태그가 적용되지 않는 모습이다. 따�
 
 ### 결과
 ![](img/LocalDateTime.png)
+</div>
+</details>
+
+<details>
+<summary>(#04) URL 링크</summary>
+<div markdown="1">
+
+타임리프에서 URL을 생성할 때는 `@{...}` 문법을 사용하면 된다.
+
+## BasicController에 link 메서드 추가
+```java
+    @GetMapping("/link")
+    public String link(Model model){
+        model.addAttribute("param1", "data1");
+        model.addAttribute("param2", "data2");
+        return "basic/link";
+    }
+```
+
+## link.html
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>URL Link</title>
+</head>
+<body>
+<ul>
+<li><a th:href="@{/hello}">basic url</a></li>
+<li><a th:href="@{/hello(param=${param1}, param2=${param2})}">query param</a></li>
+<li><a th:href="@{/hello/{param1}/{param2}(param1=${param1}, param2=${param2})}">path variable</a></li>
+<li><a th:href="@{/hello/{param1}(param1=${param1}, param2=${param2})}"> query param + path variable </a></li>
+</ul>
+</body>
+</html>
+```
+
+***
+
+#### 단순한 URL
+> `@{/hello}` : `/hello`
+***
+#### 쿼리 파라미터
+> `@{/hello(param1=${param1}, param2=${param2})}` : `/hello?param1=data1&param2=data2`
+
+`()` 에 있는 부분은 쿼리 파라미터로 처리된다.
+***
+#### 경로 변수
+> `@{/hello/{param1}/{param2}(param1=${param1}, param2=${param2})}` : `/hello/data1/data2`
+***
+* 상대경로, 절대경로, 프로토콜 기준을 표현할 수 도 있다.
+
+* `/hello` : 절대경로
+* `hello` : 상대경로
 </div>
 </details>

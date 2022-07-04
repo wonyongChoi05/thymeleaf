@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>URL Link</title>
+</head>
+<body>
+<ul>
+<li><a th:href="@{/hello}">basic url</a></li>
+<li><a th:href="@{/hello(param=${param1}, param2=${param2})}">query param</a></li>
+<li><a th:href="@{/hello/{param1}/{param2}(param1=${param1}, param2=${param2})}">path variable</a></li>
+<li><a th:href="@{/hello/{param1}(param1=${param1}, param2=${param2})}"> query param + path variable </a></li>
+</ul>
+</body>
+</html>
