@@ -1121,9 +1121,67 @@ public class TemplateController {
 ***
 
 <details>
-<summary>(#14) </summary>
+<summary>(#14) 템플릿 레이아웃 2</summary>
 <div markdown="1">
 
+## TemplateController 추가
+```java
+    @GetMapping("/layoutExtend")
+    public String layoutExtend() {
+        return "template/layoutExtend/layoutExtendMain";
+    }
+```
+
+***
+
+## layoutFile
+```html
+<html th:fragment="layout (title, content)" xmlns:th="http://
+  www.thymeleaf.org">
+<head>
+    <title th:replace="${title}">레이아웃 타이틀</title></head>
+<body>
+<h1>레이아웃 H1</h1>
+<div th:replace="${content}">
+    <p>레이아웃 컨텐츠</p></div>
+<footer> 레이아웃 푸터
+</footer>
+</body>
+</html>
+```
+
+***
+
+## layoutExtendMain
+```html
+<!DOCTYPE html>
+<html th:replace="~{template/layoutExtend/layoutFile :: layout(~{::title},
+  ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>메인 페이지 타이틀</title></head>
+<body>
+<section>
+    <p>메인 페이지 컨텐츠</p>
+    <div>메인 페이지 포함 내용</div>
+</section>
+</body>
+</html>
+```
+
+***
+
+`layoutFile.html` 을 보면 `기본 레이아웃`을 가지고 있는데, 
+`<html>`에 `th:fragment` 속성이 정의되어 있다.
+
+이 레이아웃 파일을 `기본`으로 하고 
+여기에 필요한 내용을 `전달`해서 `부분부분` `변경`하는 것으로 이해하면 된다.
+
+`layoutExtendMain.html` 는 `현재 페이지`인데, 
+`<html>` 자체를 `th:replace` 를 사용해서 `변경`하는 것을 확인할 수 있다.
+
+결국 `layoutFile.html` 에 필요한 내용을 전달하면서 
+`<html>` 자체를 `layoutFile.html`로 변경한다.
 </div>
 </details>
 
