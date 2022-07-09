@@ -1056,6 +1056,65 @@ public class TemplateController {
 <summary>(#13) 템플릿 레이아웃 1 </summary>
 <div markdown="1">
 
+이전에는 `일부 코드 조각`을 가지고와서 사용했다면, 
+이번에는 개념을 더 확장해서 `코드 조각`을 `레이아웃`에 넘겨서 
+사용하는 방법에 대해서 알아보자.
+
+예를 들어서 `<head>` 에 `공통`으로 사용하는 `css`, 
+`javascript` 같은 정보들이 있는데, 
+이러한 `공통 정보`들을 한 곳에 모아두고, 공통으로 사용하지만, 
+각 페이지마다 필요한 정보를 더 추가해서 사용하고 싶다면 
+다음과 같이 사용하면 된다.
+
+## TemplateController 추가
+```java
+    @GetMapping("/layout")
+    public String layout() {
+        return "template/layout/layoutMain";
+    }
+```
+
+***
+
+## base.html
+```html
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="common_header(title,links)"><title th:replace="${title}">레이아웃 타이틀</title>
+    <!-- 공통 -->
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/
+  awesomeapp.css}">
+    <link rel="shortcut icon" th:href="@{/images/favicon.ico}">
+    <script type="text/javascript" th:src="@{/sh/scripts/codebase.js}">
+    </script>
+    <!-- 추가 -->
+    <th:block th:replace="${links}"/>
+</html>
+```
+***
+
+## layoutMain.html
+```html
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="template/layout/base :: common_header(~{::title},~{::link})">
+    <title>메인 타이틀</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/themes/smoothness/jquery-ui.css}">
+</head>
+<body> 메인 컨텐츠</body>
+</html>
+```
+
+***
+
+* `common_header(~{::title},~{::link})` 이 부분이 `핵심`
+  * `::title`은 현재 페이지의 `title 태그`들을 `전달`한다.
+  * `::link` 는 현재 페이지의 `link 태그`들을 `전달`한다.
+
+이 방식은 사실 앞서 배운 `코드 조각`을 조금 더 `적극적`으로 사용하는 방식이다.
+
+쉽게 이야기해서 `레이아웃 개념`을 두고,
+그 레이아웃에 필요한 `코드 조각`을 `전달`해서 완성하는 것으로 이해하면 된다.
 </div>
 </details>
 
