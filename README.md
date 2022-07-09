@@ -322,3 +322,74 @@ int a = 10 * 20;
 ![](img/Literal.png)
 </div>
 </details>
+
+<details>
+<summary>(#05) Operation - 연산</summary>
+<div markdown="1">
+
+타임리프 연산은 자바와 크게 다르지 않다. 
+HTML 안에서 사용하기 때문에 HTML 엔티티를 사용하는 부분만 주의하자.
+
+## BasicController 추가
+```java
+    @GetMapping("/operation")
+    public String operation(Model model){
+        model.addAttribute("nullData", null);
+        model.addAttribute("data", "타임리프 제대로 배우기");
+        return "basic/operation";
+    }
+```
+
+## operation.html
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Operation</title>
+</head>
+<body>
+
+<ul>
+  <li>산술 연산
+    <ul>
+      <li>10 + 2 = <span th:text="10 + 2"></span></li>
+      <li>10 % 2 == 0 = <span th:text="10 % 2 == 0"></span></li>
+    </ul>
+  </li>
+    <li> 비교 연산
+        <ul>
+            <li>1 > 10 = <span th:text="1 &gt; 10"></span></li>
+            <li>1 gt 10 = <span th:text="1 gt 10"></span></li>
+            <li>1 >= 10 = <span th:text="1 >= 10"></span></li>
+            <li>1 ge 10 = <span th:text="1 ge 10"></span></li>
+            <li>1 == 10 = <span th:text="1 == 10"></span></li>
+            <li>1 != 10 = <span th:text="1 != 10"></span></li>
+        </ul>
+    </li>
+    <li>조건식
+        <ul>
+            <li>(10 % 2 == 0) ? '짝수' : '홀수' = <span th:text="(10 % 2 == 0) ? '짝수' : '홀수'"></span></li>
+        </ul>
+    </li>
+    <li>Elvis 연산자
+        <ul>
+            <li>${data} ? : '데이터가 없습니다.' = <span th:text="${data} ?: '데이터가 없습니다.'"></span></li>
+            <li>${nullData} ? : '데이터가 없습니다.' = <span th:text="${nullData} ?: '데이터가 없습니다.'"></span></li>
+        </ul>
+    </li>
+    <li>No Operation
+        <ul>
+            <li>${data} ?: _ = <span th:text="${data} ?: _">데이터가 없습니다.</span></li>
+            <li>${nullData} ?: _ = <span th:text="${nullData} ?: _">데이터가 없습니다.</span></li>
+        </ul>
+    </li>
+</ul>
+</body>
+</html>
+```
+
+## 결과
+![](img/operation.png)
+</div>
+</details>
