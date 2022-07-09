@@ -792,3 +792,169 @@ th:* 속성을 지정하면 타임리프는 기존 속성을 th:* 로 지정한 
 ![](img/block.png)
 </div>
 </details>
+
+***
+
+<details>
+<summary>(#11) 자바스크립트 인라인</summary>
+<div markdown="1">
+
+타임리프는 자바스크립트에서 타임리프를 편리하게 사용할 수 있는 `자바스크립트 인라인` 기능을 제공한다. 
+`자바스크립트 인라인` 기능은 다음과 같이 적용하면 된다.
+
+```html
+<script th:inline="javascript">
+```
+
+***
+## BasicController 추가
+```java
+@GetMapping("/javascript")
+  public String javascript(Model model) {
+      model.addAttribute("user", new User("userA", 10));
+      addUsers(model);
+      return "basic/javascript";
+}
+```
+***
+
+## javascript.html
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <title>Javascript</title>
+</head>
+<body>
+<!-- 자바스크립트 인라인 사용 전 -->
+<script>
+   var username = [[${user.username}]];
+   var age = [[${user.age}]];
+
+   //자바스크립트 내추럴 템플릿
+   var username2 = /*[[${user.username}]]*/ "test username";
+
+   //객체
+   var user = [[${user}]];
+</script>
+
+<!-- 자바스크립트 인라인 사용 후-->
+<script th:inline="javascript">
+   var username = [[${user.username}]]
+   var age = [[${user.age}]]
+
+   // javascript natural template
+   var username2 = "test username";
+
+   // 객체
+   var user = [[${user}]];
+</script>
+</body>
+</html>
+```
+
+***
+
+### 텍스트 렌더링
+```javascript
+var username = [[${user.username}]];
+```
+#### 인라인 사용 전 
+```javascript
+var username = userA;
+```
+
+#### 인라인 사용 후 
+```javascript
+var username = "userA";
+```
+***
+
+인라인 사용 전 렌더링 결과를 보면 `userA` 라는 변수 이름이 그대로 남아있다.
+
+타임리프 입장에서는 정확하게 렌더링 한 것이지만 아마 개발자가 기대한 것은 다음과 같은 `userA`라는 `문자`일 것이다.
+
+결과적으로 `userA`가 변수명으로 사용되어서 자바스크립트 `오류`가 발생한다. 
+다음으로 나오는 숫자 `age`의 경우에는 `"` 가 필요 없기 때문에 정상 렌더링 된다.
+
+인라인 사용 후 렌더링 결과를 보면 문자타입인 경우 `"`를 포함해준다.
+
+추가로 자바스크립트에서 문제가 될 수 있는 문자가 포함되어 있으면 `escape` 처리도 해준다. 
+`예) " \"`
+
+***
+
+### Javascript natural template
+타임리프는 HTML 파일을 직접 열어도 동작하는 `내추럴 템플릿` 기능을 제공한다.
+
+`자바스크립트 인라인 기능`을 사용하면 `주석`을 활용해서 이 기능을 사용할 수 있다.
+
+```javascript
+var username2 = /*[[${user.username}]]*/ "test username"; 
+```
+
+#### 인라인 사용 전 
+```javascript
+var username2 = /*userA*/ "test username"; 
+```
+
+#### 인라인 사용 후 
+```javascript
+var username2 = "userA";
+```
+`인라인 사용 전` 결과를 보면 정말 순수하게 `그대로 해석`을 해버렸다.
+
+따라서 `내추럴 템플릿` 기능이 동작하지 않고, 심지어 `렌더링 내용`이 `주석처리` 되어 버린다.
+
+***
+
+### 객체
+타임리프의 자바스크립트 인라인 기능을 사용하면 객체를 `JSON`으로 자동으로 변환해준다.
+
+* `var user = [[${user}]];`
+  * 인라인 사용 전 : `var user = BasicController.User(username=userA, age=10);`;
+  * 인라인 사용 후 : `var user = {"username":"userA","age":10};`
+* 인라인 사용 전은 `객체`의 `toString()`이 `호출된 값`이다.
+* 인라인 사용 후는 `객체`를 `JSON`으로 `변환`해준다.
+
+***
+
+</div>
+</details>
+
+***
+
+<details>
+<summary>(#12) 템플릿 조각 </summary>
+<div markdown="1">
+
+</div>
+</details>
+
+***
+
+<details>
+<summary>(#13) </summary>
+<div markdown="1">
+
+</div>
+</details>
+
+***
+
+<details>
+<summary>(#14) </summary>
+<div markdown="1">
+
+</div>
+</details>
+
+***
+
+<details>
+<summary>(#15) </summary>
+<div markdown="1">
+
+</div>
+</details>
