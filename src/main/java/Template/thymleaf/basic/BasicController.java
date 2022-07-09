@@ -112,6 +112,12 @@ public class BasicController {
         return "basic/comments";
     }
 
+    @GetMapping("/block")
+    public String block(Model model){
+        addusers(model);
+        return "basic/block";
+    }
+
     private void addusers(Model model){
         List<User> list = new ArrayList<>();
 

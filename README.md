@@ -739,8 +739,56 @@ th:* 속성을 지정하면 타임리프는 기존 속성을 th:* 로 지정한 
 ***
 
 <details>
-<summary>(#10)</summary>
+<summary>(#10) 블록</summary>
 <div markdown="1">
 
+`th:block` 은 `HTML 태그`가 아닌 타임리프의 유일한 `자체 태그`다.
+
+***
+
+## BasicController 추가
+```java
+@GetMapping("/block")
+  public String block(Model model) {
+      addUsers(model);
+      return "basic/block";
+  }
+```
+
+***
+## block.html
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Block</title>
+</head>
+<body>
+
+<th:block th:each="user : ${users}">
+    <div>
+        사용자 이름 : <span th:text="${user.username}"></span><br>
+        사용자 나이 : <span th:text="${user.age}"></span>
+    </div>
+    <div>
+        요약 : <span th:text="${user.username} + ' / ' + ${user.age}"></span>
+    </div>
+    <br>
+</th:block>
+</body>
+</html>
+```
+
+***
+
+타임리프의 특성상 `HTML` 태그안에 속성으로 기능을 정의해서 사용하는데, 
+위 예처럼 이렇게 사용하기 애매한 경우에 사용하면 된다. 
+`th:block` 은 `렌더링시 제거`된다.
+
+***
+
+## 결과
+![](img/block.png)
 </div>
 </details>
