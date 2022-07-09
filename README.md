@@ -670,15 +670,69 @@ th:* 속성을 지정하면 타임리프는 기존 속성을 th:* 로 지정한 
 </body>
 </html>
 ```
+
+### `if`, `unless`
+타임리프는 해당 조건이 맞지 않으면 태그 자체를 렌더링하지 않는다.
+만약 다음 조건이 `false` 인 경우` <span>...<span>` 부분 자체가 렌더링 되지 않고 사라진다. <span th:text="'미성년자'" th:if="${user.age lt 20}"></span>
+
+### `switch`
+* `*`은 만족하는 조건이 없을 때 사용하는 디폴트이다.
 </div>
 </details>
 
 ***
 
 <details>
-<summary>(#09) </summary>
+<summary>(#09) 주석</summary>
 <div markdown="1">
 
+## BasicController 추가
+```java
+    @GetMapping("/comments")
+    public String comments(Model model){
+        model.addAttribute("data", "Spring!");
+        return "basic/comments";
+    }
+```
+
+***
+
+## condition.html
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Comments</title>
+</head>
+<body>
+
+<h1>예시</h1>
+<span th:text="${data}">html data</span>
+<h1>1. 표준 HTML 주석</h1>
+<!-- <span th:text="${data}">html data</span> -->
+
+<h1>2. 타임리프 파서 주석</h1> <!--/* [[${data}]] */-->
+<!--/*-->
+
+<span th:text="${data}">html data</span>
+<!--*/-->
+
+<h1>3. 타임리프 프로토타입 주석</h1>
+<!--/*/ <span th:text="${data}">html data</span> /*/-->
+
+</body>
+</html>
+```
+### 1. 표준 HTML 주석
+   자바스크립트의 표준 HTML 주석은 타임리프가 렌더링 하지 않고, 그대로 남겨둔다.
+### 2. 타임리프 파서 주석
+   타임리프 파서 주석은 타임리프의 진짜 주석이다. 렌더링에서 주석 부분을 제거한다.
+
+### 3. 타임리프 프로토타입 주석
+   타임리프 프로토타입은 약간 특이한데, HTML 주석에 약간의 구문을 더했다.
+   HTML 파일을 웹 브라우저에서 그대로 열어보면 HTML 주석이기 때문에 이 부분이 웹 브라우저가 렌더링하지 않는다.
+   타임리프 렌더링을 거치면 이 부분이 정상 렌더링 된다.
 </div>
 </details>
 
