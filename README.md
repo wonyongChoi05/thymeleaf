@@ -929,13 +929,131 @@ var username2 = "userA";
 <summary>(#12) 템플릿 조각 </summary>
 <div markdown="1">
 
+웹 페이지를 개발할 때는 `공통 영역`이 많이 있다. 
+예를 들어서 `상단 영역`이나 `하단 영역`, 
+`좌측 카테고리` 등등 여러 페이지에서 함께 사용하는 영역들이 있다. 
+
+이런 부분을 코드를 `복사`해서 사용한다면 변경시 여러 페이지를 다 `수정`해야 하므로 
+상당히 `비효율적`이다. 
+타임리프는 이런 문제를 해결하기 위해 `템플릿 조각`과 `레이아웃 기능`을 지원한다.
+
+***
+
+## TemplateController 추가
+```java
+package Template.thymleaf.basic;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/template")
+public class TemplateController {
+
+    @GetMapping("/fragment")
+    public String template() {
+        return "template/fragment/fragmentMain";
+    }
+}
+```
+
+***
+
+## footer.html
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Footer</title>
+</head>
+<body>
+<footer th:fragment="copy">
+    푸터 자리 입니다.
+</footer>
+
+<footer th:fragment="copyParam (param1, param2)">
+    <p>파라미터 자리 입니다.</p>
+    <p th:text="${param1}"></p>
+    <p th:text="${param2}"></p>
+</footer>
+</body>
+</html>
+```
+***
+
+## fragmentMain.html
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FragmentMain</title>
+</head>
+<body>
+<h1>부분 포함</h1>
+<h2>부분 포함 insert</h2>
+<div th:insert="~{template/fragment/footer :: copy}"></div>
+
+<h2>부분 포함 replace</h2>
+<div th:replace="~{template/fragment/footer :: copy}"></div>
+
+<h2>부분 포함 단순 표현식</h2>
+<div th:replace="template/fragment/footer :: copy"></div>
+
+<h1>파라미터 사용</h1>
+<div th:replace="~{template/fragment/footer :: copyParam ('데이터1', '데이터 2')}"></div>
+</body>
+</html>
+```
+
+***
+
+`template/fragment/footer :: copy` : `template/fragment/footer.html` 
+템플릿에 있는 `th:fragment="copy"` 라는 부분을 `템플릿 조각`으로 가져와서 사용한다는 의미이다.
+
+***
+
+### 부분 포함 insert
+```html
+<div th:insert="~{template/fragment/footer :: copy}"></div>
+```
+`th:insert` 를 사용하면 `현재 태그(div)` 내부에 `추가`한다.
+
+***
+
+### 부분 포함 replace
+```html
+<div th:replace="~{template/fragment/footer :: copy}"></div>
+```
+`th:replace` 를 사용하면 `현재 태그(div)`를 `대체`한다.
+
+***
+
+### 부분 포함 단순 표현식
+```html
+<div th:replace="template/fragment/footer :: copy"></div>
+```
+`~{...}` 를 사용하는 것이 `원칙`이지만 `템플릿 조각`을 사용하는 
+`코드가 단순하면` 이 부분을 `생략`할 수 있다.
+
+***
+
+### 파라미터 사용
+다음과 같이 `파라미터를 전달`해서 `동적`으로 조각을 `렌더링` 할 수도 있다.
+
+```html
+ <div th:replace="~{template/fragment/footer :: copyParam ('데이터1', '데이터2')}"></div>
+```
 </div>
 </details>
 
 ***
 
 <details>
-<summary>(#13) </summary>
+<summary>(#13) 템플릿 레이아웃 1 </summary>
 <div markdown="1">
 
 </div>
