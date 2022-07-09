@@ -57,6 +57,8 @@ Escape 문법 때문에 ``<b>`` 태그가 적용되지 않는 모습이다. 따�
 </div>
 </details>
 
+***
+
 <details>
 <summary>(#02) Variable - SpringEL</summary>
 <div markdown="1">
@@ -164,6 +166,8 @@ Escape 문법 때문에 ``<b>`` 태그가 적용되지 않는 모습이다. 따�
 </div>
 </details>
 
+***
+
 <details>
 <summary>(#03) LocalDateTime</summary>
 <div markdown="1">
@@ -218,6 +222,8 @@ Escape 문법 때문에 ``<b>`` 태그가 적용되지 않는 모습이다. 따�
 ![](img/LocalDateTime.png)
 </div>
 </details>
+
+***
 
 <details>
 <summary>(#04) URL 링크</summary>
@@ -274,6 +280,8 @@ Escape 문법 때문에 ``<b>`` 태그가 적용되지 않는 모습이다. 따�
 </div>
 </details>
 
+***
+
 <details>
 <summary>(#04) Literal</summary>
 <div markdown="1">
@@ -322,6 +330,8 @@ int a = 10 * 20;
 ![](img/Literal.png)
 </div>
 </details>
+
+***
 
 <details>
 <summary>(#05) Operation - 연산</summary>
@@ -393,6 +403,8 @@ HTML 안에서 사용하기 때문에 HTML 엔티티를 사용하는 부분만 �
 ![](img/operation.png)
 </div>
 </details>
+
+***
 
 <details>
 <summary>(#06) Attribute </summary>
@@ -483,6 +495,8 @@ th:* 속성을 지정하면 타임리프는 기존 속성을 th:* 로 지정한 
 ![](img/attribute.png)
 </div>
 </details>
+
+***
 
 <details>
 <summary>(#07) Each - 반복</summary>
@@ -588,5 +602,91 @@ th:* 속성을 지정하면 타임리프는 기존 속성을 th:* 로 지정한 
 
 ## 결과
 ![](img/each.png)
+</div>
+</details>
+
+***
+
+<details>
+<summary>(#08) 조건</summary>
+<div markdown="1">
+
+타임리프의 조건식
+`if`, `unless`(if의 반대)
+
+## BasicController 추가
+```java
+    @GetMapping("/condition")
+    public String condition(Model model){
+        addusers(model);
+        return "basic/condition";
+    }
+```
+
+***
+
+## condition.html
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Condition</title>
+</head>
+<body>
+<h1>if, unless</h1>
+<table border="1">
+    <tr>
+        <th>count</th>
+        <th>username</th>
+        <th>age</th>
+    </tr>
+    <tr th:each="user, userStat : ${users}">
+        <td th:text="${userStat.count}">1</td>
+        <td th:text="${user.username}">username</td>
+        <td>
+            <span th:text="${user.age}">0</span>
+            <span th:text="'미성년자'" th:if="${user.age lt 20}"></span>
+            <span th:text="'미성년자'" th:unless="${user.age ge 20}"></span>
+        </td> </tr>
+</table>
+
+
+<h1>switch</h1>
+<table border="1">
+    <tr>
+        <th>count</th>
+        <th>username</th>
+        <th>age</th>
+    </tr>
+    <tr th:each="user, userStat : ${users}">
+        <td th:text="${userStat.count}">1</td>
+        <td th:text="${user.username}">username</td>
+        <td th:switch="${user.age}">
+            <span th:case="10">10살</span> <span th:case="20">20살</span> <span th:case="*">기타</span>
+        </td> </tr>
+</table>
+
+</body>
+</html>
+```
+</div>
+</details>
+
+***
+
+<details>
+<summary>(#09) </summary>
+<div markdown="1">
+
+</div>
+</details>
+
+***
+
+<details>
+<summary>(#10)</summary>
+<div markdown="1">
+
 </div>
 </details>
